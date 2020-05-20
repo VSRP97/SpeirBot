@@ -2,13 +2,29 @@ import matplotlib.pyplot as plt
 
 
 def coords_a_pixel(cx, cy):
+    """
+    Adapta las coordenadas estelares a coordenadas cartesianas del primer cuadrante.
+
+    :param cx: Coordenada x.
+    :param cy: Coordenada y.
+    :return: Tupla con las nuevas coordenadas x, y.
+    """
     v = 500
     y = cy * v + v
     x = cx * v + v
     return x, y
 
 
-def leer_coord(direccion):
+def leer_coord(direccion: str):
+    """
+    Lee los datos del archivo de texto y los asigna a 3 directorios.
+
+    :param direccion: String con la direccion del archivo de texto
+    :return: Tupla de diccionarios (d_cord, d_magn, d_nom)
+        d_cord - Contiene las coordenas de las estrellas con llaves Henry Draper.
+        d_magn - Contiene las magnitudes de las estrellas con llaves Henry Draper.
+        d_nom - Contiene los numeros Henry Draper con llaves de los nombres de las estrellas.
+    """
     file = open(direccion, "r")
     d_cord = {}
     d_magn = {}
@@ -31,6 +47,12 @@ def leer_coord(direccion):
 
 
 def graficar_por_magnitud(coor: dict, magni: dict):
+    """
+    Grafica las estrellas con sus tamaños correspondientes.
+
+    :param coor: Diccionario de coordenadas.
+    :param magni: Diccionario de magnitudes.
+    """
     axes = plt.gca()
     plt.xlim(0, 1000)
     plt.ylim(0, 1000)
@@ -43,6 +65,13 @@ def graficar_por_magnitud(coor: dict, magni: dict):
         plt.scatter(x, y, s=star_size, c='white')
 
 def graficar_constelacion(direccion, nom: dict, coor: dict):
+    """
+    Grafica una constelación.
+
+    :param direccion: String con la direccion del archivo de la constelación correspondiente.
+    :param nom: Diccionario de nombres de estrellas.
+    :param coor: Diccionario de coordenadas de estrellas.
+    """
     file = open(direccion, "r")
     while True:
         line = file.readline()
