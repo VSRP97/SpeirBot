@@ -1,5 +1,6 @@
 from telegram.ext import Updater, CommandHandler
-from botCommands import *
+from comandos_bot import *
+import metodos as met
 from config import TOKEN
 
 def main():
@@ -13,4 +14,8 @@ def main():
     updater.idle()
 
 if __name__ == '__main__':
-    main()
+    #main()
+    d_coor, d_magn, d_nom = met.leer_coord("Archivos/stars.txt")
+    met.graficar_por_magnitud(d_coor, d_magn)
+    met.graficar_constelacion("Archivos/constelaciones/OsaMayor.txt", d_nom, d_coor)
+    met.plt.show()
