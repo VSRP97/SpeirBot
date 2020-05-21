@@ -1,6 +1,5 @@
-from telegram.ext import Updater, CommandHandler
-from comandos_bot import *
-import metodos as met
+from telegram.ext import Updater, CommandHandler, CallbackQueryHandler
+from bot_com import *
 from config import TOKEN
 
 def main():
@@ -9,13 +8,13 @@ def main():
 
     dispatcher.add_handler(CommandHandler("start", start))
     dispatcher.add_handler(CommandHandler("prueba", prueba))
+    dispatcher.add_handler(CommandHandler("estrellas", estrellas))
+    dispatcher.add_handler(CommandHandler("constelaciones", constelaciones))
+    dispatcher.add_handler(CommandHandler("elegir_constelacion", elegir_constelacion))
+    dispatcher.add_handler(CallbackQueryHandler(constelacion))
 
     updater.start_polling()
     updater.idle()
 
 if __name__ == '__main__':
-    #main()
-    d_coor, d_magn, d_nom = met.leer_coord("Archivos/stars.txt")
-    met.graficar_por_magnitud(d_coor, d_magn)
-    met.graficar_constelacion("Archivos/constelaciones/OsaMayor.txt", d_nom, d_coor)
-    met.plt.show()
+    main()

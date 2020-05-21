@@ -53,11 +53,8 @@ def graficar_por_magnitud(coor: dict, magni: dict):
     :param coor: Diccionario de coordenadas.
     :param magni: Diccionario de magnitudes.
     """
-    axes = plt.gca()
     plt.xlim(0, 1000)
     plt.ylim(0, 1000)
-    axes.set_facecolor('black')
-    #plt.axis("off")
 
     for i in coor:
         star_size = round(5.0 / magni[i] + 2)
@@ -87,3 +84,22 @@ def graficar_constelacion(direccion, nom: dict, coor: dict):
         x_coor = [origen[0], destino[0]]
         y_coor = [origen[1], destino[1]]
         plt.plot(x_coor, y_coor, c='yellow')
+
+def build_menu(buttons, n_col, header_buttons=None, footer_buttons=None):
+    """
+    Crea un menú de Telegram.
+
+    .. note:: Obtenido de https://github.com/python-telegram-bot/python-telegram-bot/wiki/
+        Code-snippets#build-a-menu-with-buttons
+    :param buttons: Lista de botones a colocar en el menú
+    :param n_col: Número de columnas en el menú.
+    :param header_buttons: Botones en el tope del menú.
+    :param footer_buttons: Botones en el fondo del menú.
+    :return: El menú.
+    """
+    menu = [buttons[i:i + n_col] for i in range(0, len(buttons), n_col)]
+    if header_buttons:
+        menu.insert(0, [header_buttons])
+    if footer_buttons:
+        menu.append([footer_buttons])
+    return menu
