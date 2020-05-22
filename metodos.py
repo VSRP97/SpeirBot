@@ -34,7 +34,7 @@ def leer_coord(direccion: str):
         line = file.readline()
         if not line:
             break
-        datos = line.split()
+        datos = line.split() #Dividido por los espacios
         henry = datos[3]
         d_cord[henry] = (float(datos[0]), float(datos[1]))  # (x, y)
         d_magn[henry] = float(datos[4])  # Magnitud
@@ -82,8 +82,11 @@ def graficar_constelacion(direccion, nom: dict, coor: dict):
         arista[0] = nom[arista[0]]
         arista[1] = nom[arista[1]]
 
-        origen = coords_a_pixel(coor[arista[0]][0], coor[arista[0]][1])
-        destino = coords_a_pixel(coor[arista[1]][0], coor[arista[1]][1])
+        henry_org = arista[0]
+        henry_des = arista[1]
+
+        origen = coords_a_pixel(coor[henry_org][0], coor[henry_org][1])
+        destino = coords_a_pixel(coor[henry_des][0], coor[henry_des][1])
 
         x_coor = [origen[0], destino[0]]
         y_coor = [origen[1], destino[1]]
