@@ -1,18 +1,23 @@
 import metodos as met
 import os
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ParseMode
 
 d_coor, d_magn, d_nom = met.leer_coord("Archivos/stars.txt")
 
 
 def start(update, context):
-    update.message.reply_text("Hola mundo.")
+    """
+    Envía una descripción de los comandos disponibles.
 
-
-def prueba(update, context):
-    nombre = update.message.chat.first_name
-    mensaje = "Bienvenido, {}".format(nombre)
-    update.message.reply_text(mensaje)
+    :param update:
+    :param context:
+    """
+    update.message.reply_text("<b>Comandos</b>\n"
+                              "/estrellas - Recibe una imagen de todas las estrellas.\n"
+                              "/constelaciones - Recibe una imagen de todas las constelaciones sobre las estrellas.\n"
+                              "/elegir_constelacion - Abre un menú que permitirá seleccionar la constelación deseada y "
+                              "recibir la imagen de esta sobre las estrellas."
+                              , parse_mode=ParseMode.HTML)
 
 
 def estrellas(update, context):
@@ -40,10 +45,13 @@ def constelaciones(update, context):
     :param context:
     """
     met.plt.clf()
+    #Grafica las estrellas
     met.graficar_por_magnitud(d_coor, d_magn)
+    #Lista de los nombres archivos de constelaciones
     allfiles = os.listdir("Archivos/constelaciones/")
     for i in allfiles:
         direccion = "Archivos/constelaciones/" + i
+        #Grafica la constelación i.
         met.graficar_constelacion(direccion, d_nom, d_coor)
     met.plt.axis('off')
     met.plt.savefig('stars.png', bbox_inches='tight', facecolor='black')
@@ -61,23 +69,26 @@ def elegir_constelacion(update, context):
     :param context:
     """
     allfiles = os.listdir("Archivos/constelaciones/")
+    #Lista de botones
     button_list = []
     for i in allfiles:
-        text = i.replace(".txt","")
+        text = i.replace(".txt", "")
+        #Agrega boton de telegram a lista de botones
         button_list.append(InlineKeyboardButton(text, callback_data=i))
+    #Crea menú de botones
     reply_markup = InlineKeyboardMarkup(met.build_menu(button_list, n_col=2))
     chatid = update.effective_chat.id
+    #Manda el menú de botones
     context.bot.send_message(chat_id=chatid, text="Elija una constelación", reply_markup=reply_markup)
+
 
 def constelacion(update, context):
     """
     De acuerdo a la constelación elegida en el menú, manda una imagen a telegram con todas las estrellas
         y la contelación seleccionada.
-
-    :rtype: object
     """
     met.plt.clf()
-    direccion = "Archivos/constelaciones/"+update.callback_query.data
+    direccion = "Archivos/constelaciones/" + update.callback_query.data
     met.graficar_por_magnitud(d_coor, d_magn)
     met.graficar_constelacion(direccion, d_nom, d_coor)
     met.plt.axis('off')
@@ -86,6 +97,3 @@ def constelacion(update, context):
     chatid = update.effective_chat.id
     img = open('stars.png', 'rb')
     context.bot.send_photo(chat_id=chatid, photo=img)
-
-
-

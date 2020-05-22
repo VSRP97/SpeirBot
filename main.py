@@ -7,10 +7,11 @@ def main():
     dispatcher = updater.dispatcher
 
     dispatcher.add_handler(CommandHandler("start", start))
-    dispatcher.add_handler(CommandHandler("prueba", prueba))
+    dispatcher.add_handler(CommandHandler("help", start))
     dispatcher.add_handler(CommandHandler("estrellas", estrellas))
     dispatcher.add_handler(CommandHandler("constelaciones", constelaciones))
     dispatcher.add_handler(CommandHandler("elegir_constelacion", elegir_constelacion))
+    #Recibe la selección del menú.
     dispatcher.add_handler(CallbackQueryHandler(constelacion))
 
     updater.start_polling()
