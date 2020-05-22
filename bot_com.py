@@ -27,7 +27,6 @@ def estrellas(update, context):
     :param update:
     :param context:
     """
-    met.plt.clf()
     met.graficar_por_magnitud(d_coor, d_magn)
     met.plt.axis('off')
     met.plt.savefig('stars.png', bbox_inches='tight', facecolor='black')
@@ -35,6 +34,7 @@ def estrellas(update, context):
     chatid = update.effective_chat.id
     img = open('stars.png', 'rb')
     context.bot.send_photo(chat_id=chatid, photo=img)
+    met.plt.clf()
 
 
 def constelaciones(update, context):
@@ -44,7 +44,6 @@ def constelaciones(update, context):
     :param update:
     :param context:
     """
-    met.plt.clf()
     #Grafica las estrellas
     met.graficar_por_magnitud(d_coor, d_magn)
     #Lista de los nombres archivos de constelaciones
@@ -59,6 +58,7 @@ def constelaciones(update, context):
     chatid = update.effective_chat.id
     img = open('stars.png', 'rb')
     context.bot.send_photo(chat_id=chatid, photo=img)
+    met.plt.clf()
 
 
 def elegir_constelacion(update, context):
@@ -87,7 +87,7 @@ def constelacion(update, context):
     De acuerdo a la constelación elegida en el menú, manda una imagen a telegram con todas las estrellas
         y la contelación seleccionada.
     """
-    met.plt.clf()
+
     direccion = "Archivos/constelaciones/" + update.callback_query.data
     met.graficar_por_magnitud(d_coor, d_magn)
     met.graficar_constelacion(direccion, d_nom, d_coor)
@@ -97,3 +97,4 @@ def constelacion(update, context):
     chatid = update.effective_chat.id
     img = open('stars.png', 'rb')
     context.bot.send_photo(chat_id=chatid, photo=img)
+    met.plt.clf()
