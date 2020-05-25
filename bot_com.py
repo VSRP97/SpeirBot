@@ -86,6 +86,9 @@ def constelacion(update, context):
     """
     De acuerdo a la constelación elegida en el menú, manda una imagen a telegram con todas las estrellas
         y la contelación seleccionada.
+
+        :param update:
+        :param context:
     """
 
     direccion = "Archivos/constelaciones/" + update.callback_query.data
